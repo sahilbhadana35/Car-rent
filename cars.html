@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Car Rental - Responsive Onepage HTML Template</title>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="description" content="Car Rental One Page HTML Template">
+<meta name="keywords" content="one page, html, template, car, car rental, taxi, cab, booking, responsive, business">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- Bootstrap css -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Fontawesome css -->
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<!-- Magnific-popup css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+
+<!-- Owl Carousel css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+
+<!-- Main css -->
+<link rel="stylesheet" href="car_style.css">
+<script src="car_data.json">
+</script>
+
+
+
+
+
+
+
+<script>
+  let filtertransmission=[];
+  let filtercar=[];
+  let filterfuel=[];
+  let dataobj=window.sessionStorage.getItem("dataitem");
+    let formdata=JSON.parse(dataobj);
+    console.log(formdata);
+  window.onload=function run(){
+    let x= document.getElementById("main-class");
+  /**  let filters={
+      "type":{
+      "Automatic":true,
+      "Manual":true
+      },
+      "car":{
+        "Hatchback":true,
+      "Sedan":true,
+      "SUV":true,
+      "Mini SUV":true
+      },
+      
+      "Fuel":{
+        "Diesel":true,
+      "Petrol":true
+      }
+    };
+     let Automatic= document.getElementById("auto");
+    let Manual= document.getElementById("manual");
+    let Petrol= document.getElementById("petrol");
+    let Diesel= document.getElementById("diesel");
+    let Sedan= document.getElementById("sedan");
+    let Suv= document.getElementById("suv");
+    */
+    let str="";
+    data.map((car,index)=>{
+      let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+      if(car.Location!==formdata.location || Availaible===false)
+      {  
+        str+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        str+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+        console.log(car);
+  });
+  x.innerHTML=str;
+  
+  }
+  function changehandler(fill)
+    {
+      let x= document.getElementById("main-class");
+      if(document.getElementById(fill).checked)
+      {
+        filtertransmission.push(fill);        
+      }
+      else
+      {
+        for (var i=filtertransmission.length-1; i>=0; i--) {
+        if (filtertransmission[i] === fill) {
+          filtertransmission.splice(i, 1);
+          }
+        }
+      }
+      console.log(filtertransmission);
+      let filtereddata="";
+      data.map(car=>{
+        let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+        if(filtertransmission[0]===car.Transmission||filtertransmission[1]===car.Transmission)
+        {
+          if(car.Location!==formdata.location|| Availaible===false)
+      {  
+        filtereddata+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        filtereddata+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+        
+        }
+      })
+      x.innerHTML=filtereddata;
+      if(filtercar.length==0&&filtertransmission.length==0&&filterfuel.length==0)
+    {
+      let strnew="";
+      data.map((car,index)=>{
+        let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+        if(car.Location!==formdata.location|| Availaible===false)
+      {  
+        strnew+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        strnew+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+        
+    });
+    x.innerHTML=strnew;
+    }
+    }
+    function carhandler(fill)
+    {
+      let x= document.getElementById("main-class");
+      if(document.getElementById(fill).checked)
+      {
+        filtercar.push(fill);        
+      }
+      else
+      {
+        for (var i=filtercar.length-1; i>=0; i--) {
+        if (filtercar[i] === fill) {
+          filtercar.splice(i, 1);
+          }
+        }
+      }
+      console.log(filtercar);
+      let filtereddata="";
+      data.map(car=>{
+        let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+        if(filtercar[0]===car.Car_Type ||filtercar[1]===car.Car_Type ||filtercar[2]===car.Car_Type ||filtercar[3]===car.Car_Type )
+        {
+          if(car.Location!==formdata.location|| Availaible===false)
+      {  
+        filtereddata+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        filtereddata+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+        
+        }
+      })
+      x.innerHTML=filtereddata;
+      if(filtercar.length==0&&filtertransmission.length==0&&filterfuel.length==0)
+    {
+      let strnew="";
+      data.map((car,index)=>{
+        let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+        if(car.Location!==formdata.location|| Availaible===false)
+      {  
+        strnew+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        strnew+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+            });
+    x.innerHTML=strnew;
+    }
+    }
+    function fuelhandler(fill)
+    {
+      let x= document.getElementById("main-class");
+      if(document.getElementById(fill).checked)
+      {
+        filterfuel.push(fill);        
+      }
+      else
+      {
+        for (var i=filterfuel.length-1; i>=0; i--) {
+        if (filterfuel[i] === fill) {
+        filterfuel.splice(i, 1);
+          }
+        }
+      }
+      console.log(filterfuel);
+      let filtereddata="";
+      data.map(car=>{
+        let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+        if(filterfuel[0]===car.Fuel_Type ||filterfuel[1]===car.Fuel_Type  )
+        {
+          if(car.Location!==formdata.location|| Availaible===false)
+      {  
+        filtereddata+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        filtereddata+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+        
+          }
+      })
+      x.innerHTML=filtereddata;
+      if(filtercar.length==0&&filtertransmission.length==0&&filterfuel.length==0)
+    {
+      let strnew="";
+      data.map((car,index)=>{
+        let Availaible=false;
+      let ttt=car.Availability.map((day,key)=>{
+        if(car.Availability[key]===formdata.day)
+        Availaible= true;
+      });
+      console.log(Availaible);
+        if(car.Location!==formdata.location|| Availaible===false)
+      {  
+        strnew+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md '+"disabled"+'">Availaible</a></div></div>';
+      }
+      else
+        strnew+= ' <div class="row car"> <div class="col-lg-5"><div class="view overlay rounded z-depth-2 mb-lg-0 mb-4"><img class="img-fluid" src="'+car.Photo+'" alt="Sample image"><a><div class="mask rgba-white-slight"></div></a></div></div><div class="col-lg-7 "><h3 class="font-weight-bold mb-3" ><strong>'+car.Name+'</strong></h3><p><strong>Price</strong>:<span >'+car.Price+'</span></p><p><strong>Seats</strong>:<span >'+car.Seats.toString()+'</span></p><p><strong>Fuel Type</strong>:<span >'+car.Fuel_Type+'</span></p><p><strong>Transmission</strong>:<span >'+car.Transmission+'</span></p><p><strong>Car Type</strong>:<span >'+car.Car_Type+'</span></p><a class="btn btn-success btn-md" >Availaible</a></div></div>';
+            });
+    x.innerHTML=strnew;
+    }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+  <!-- Navigation Section -->
+  <div class="navbar custom-navbar wow fadeInDown" data-wow-duration="2s" role="navigation" id="header">
+    <div class="container">
+
+      <!-- NAVBAR HEADER -->
+      <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon icon-bar"></span> <span class="icon icon-bar"></span> <span class="icon icon-bar"></span> </button>
+        <!-- lOGO TEXT HERE -->
+        <a href="index.html" class="navbar-brand">Car <span>Rental</span></a> </div>
+
+      <!-- NAVIGATION LINKS -->
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#home" class="smoothScroll">Home</a></li>
+          <li><a href="#cars" class="smoothScroll">Cars</a></li>
+          <li><a href="#about" class="smoothScroll">About</a></li>
+          <li><a href="#service" class="smoothScroll">Service</a></li>
+          <li><a href="#team" class="smoothScroll">Support</a></li>
+          <li><a href="#contact" class="smoothScroll">Contact</a></li>
+          <li><span class="calltxt"><i class="fa fa-phone" aria-hidden="true"></i> 123 456 7890</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section: Blog v.1 -->
+<section class="my-5">
+
+  <!-- Grid row -->
+    <div class="row">
+    <div class="col-md-4">
+
+  <div class="jumbotron filter">
+    <h2><strong>Get By Specification</strong></h2>
+    <h3><strong>Transmission Type</strong></h3>
+    <div class="checkbox">
+<label><input type="checkbox" value="" id="Automatic" onchange="changehandler('Automatic')">Automatic</label>
+</div>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="Manual" onchange="changehandler('Manual')">Manual</label>
+</div>
+
+
+<h3><strong>Car Type</strong></h3>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="Hatchback" onchange="carhandler('Hatchback')"> Hatchback </label>
+</div>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="Sedan" onchange="carhandler('Sedan')">Sedan</label>
+</div>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="SUV" onchange="carhandler('SUV')">SUV</label>
+</div>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="Mini SUV" onchange="carhandler('Mini SUV')">Mini SUV</label>
+</div>
+
+
+<h3><strong>Fuel</strong></h3>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="Diesel" onchange="fuelhandler('Diesel')">Diesel</label>
+</div>
+<div class="checkbox">
+<label><input type="checkbox" value="" id="Petrol" onchange="fuelhandler('Petrol')">Petrol</label>
+</div>
+</div>
+
+  </div>
+
+
+
+   <div class="col-md-8" id="main-class">
+    <!-- Grid column -->
+
+  </div>
+  <!-- Grid row -->
+
+</section>
+<!-- Section: Blog  -->
+
+
+
+
+<!-- Footer Section -->
+<footer>
+  <div class="container">
+    <!-- social Section -->
+    <div class="socialLinks" >
+      <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+      <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+       <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+      <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+       <a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a>
+      </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="footer-copyright">
+          <p>&copy; Car rentals | All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>">
+< <script type="text/javascript" src="bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+
+<!-- Popup -->
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/jquery.magnific-popup.min.js"></script>
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/magnific-popup-options.js"></script>
+
+<!-- Carousel -->
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/owl.carousel.js"></script>
+
+<!-- Sticky Header -->
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/jquery.sticky.js"></script>
+
+<!-- Parallax -->
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/jquery.parallax.js"></script>
+
+<!-- Counter -->
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/counter.js"></script>
+<script src="http://sharjeelanjum.com/html/car-rental/html/js/smoothscroll.js"></script>
+
+</body>
+</html>
